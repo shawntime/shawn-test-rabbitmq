@@ -22,7 +22,7 @@ public class TestProducer {
     public static void main(String[] args) {
         User user = new User();
         user.setId(1);
-        user.setName("马韶华");
+        user.setName("张三");
         send(user);
     }
 
