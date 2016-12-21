@@ -19,37 +19,30 @@ public class TestProducer {
 
     private static final String QUEUE_NAME = "shawntime_helloworld";
 
-    public static void main(String[] args) {
-        User user = new User();
-        user.setId(1);
-        user.setName("张三");
-        send(user);
-    }
-
-    public static void send(Object msg) {
-        ConnectionFactory connectionFactory = new ConnectionFactory();
+    public static void send(Object msg) throws IOException, TimeoutException {
+        ConnectionFactory connectionFactory = new ConnectionFactory(); //打开连接和创建频道
         connectionFactory.setHost("127.0.0.1");
         connectionFactory.setUsername("shawntime");
         connectionFactory.setPassword("shawntime");
         connectionFactory.setPort(AMQP.PROTOCOL.PORT);
 
-        Connection connection = null;
-        Channel channel = null;
-        try {
-            connection = connectionFactory.newConnection();
-            //创建频道
-            channel = connection.createChannel();
-            //制定队列
-            channel.queueDeclare(QUEUE_NAME, false, false, false, null);
-            channel.basicPublish("", QUEUE_NAME, null, JSON.toJSONString(msg).getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (TimeoutException e) {
-            e.printStackTrace();
-        } finally {
+        Connection connection = connectionFactory.newConnection(); //创建连接
+        Channel channel = connection.createChannel(); //创建频道
+        channel.queueDeclare(QUEUE_NAME, false, false, false, null); //指定队列
+        channel.basicPublish("", QUEUE_NAME, null, JSON.toJSONString(msg).getBytes()); //发送消息
+        channel.close();
+        connection.close();
+
+    }
+
+    public static void main(String[] args) {
+
+        for(int i=0; i<10; ++i) {
+            User user = new User();
+            user.setId(i);
+            user.setName("张三"+i);
             try {
-                channel.close();
-                connection.close();
+                send(user);
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (TimeoutException e) {
