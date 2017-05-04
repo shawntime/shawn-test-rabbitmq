@@ -22,18 +22,21 @@ public class TestReceiver {
         connectionFactory.setUsername("shawntime");
         connectionFactory.setPassword("shawntime");
         connectionFactory.setPort(AMQP.PROTOCOL.PORT);
+        connectionFactory.setVirtualHost("TEST");
         Connection connection = connectionFactory.newConnection();
         Channel channel = connection.createChannel();
         //声明队列，主要为了防止消息接收者先运行此程序，队列还不存在时创建队列。
         channel.queueDeclare(QUEUE_NAME, false, false, false, null);
-        QueueingConsumer consumer = new QueueingConsumer(channel); //创建消费者
+        //创建消费者
+        DefaultConsumer consumer = new DefaultConsumer(channel) {
+            @Override
+            public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[]
+                    body) throws IOException {
+                User user = JSON.parseObject(body, User.class);
+                System.out.println("Received Message：" + user);
+            }
+        };
         channel.basicConsume(QUEUE_NAME, true, consumer); //指定消费队列
-        while (true) {
-            //nextDelivery是一个阻塞方法（内部实现其实是阻塞队列的take方法）
-            QueueingConsumer.Delivery delivery = consumer.nextDelivery();
-            User user = JSON.parseObject(delivery.getBody(), User.class);
-            System.out.println("Received Message：" + user);
-        }
     }
 
     public static void main(String[] args) {

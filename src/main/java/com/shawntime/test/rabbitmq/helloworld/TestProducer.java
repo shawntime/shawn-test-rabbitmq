@@ -25,6 +25,7 @@ public class TestProducer {
         connectionFactory.setUsername("shawntime");
         connectionFactory.setPassword("shawntime");
         connectionFactory.setPort(AMQP.PROTOCOL.PORT);
+        connectionFactory.setVirtualHost("TEST");
 
         Connection connection = connectionFactory.newConnection(); //创建连接
         Channel channel = connection.createChannel(); //创建频道
