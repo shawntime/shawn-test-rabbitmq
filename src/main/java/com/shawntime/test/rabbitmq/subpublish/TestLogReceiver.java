@@ -1,6 +1,7 @@
 package com.shawntime.test.rabbitmq.subpublish;
 
 import java.io.IOException;
+import java.util.Random;
 import java.util.concurrent.TimeoutException;
 
 import com.rabbitmq.client.AMQP;
@@ -35,7 +36,9 @@ public abstract class TestLogReceiver {
         // 设置exchange类型为fanout
         channel.exchangeDeclare(EXCHANGE_NAME, "fanout");
         // 获取临时队列名称
-        String queueName = channel.queueDeclare().getQueue();
+//        String queueName = channel.queueDeclare().getQueue();
+        String queueName = "log_queue" + "_" + new Random().nextInt(100);
+        channel.queueDeclare(queueName, true, false, false, null);
         channel.queueBind(queueName, EXCHANGE_NAME, "log_key");
         System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
         DefaultConsumer consumer = new DefaultConsumer(channel) {

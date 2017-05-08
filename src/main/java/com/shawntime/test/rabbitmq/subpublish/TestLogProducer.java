@@ -10,6 +10,7 @@ import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
+import com.rabbitmq.client.MessageProperties;
 
 /**
  * Created by shma on 2017/5/6.
@@ -49,7 +50,8 @@ public class TestLogProducer {
     }
 
     private static void sendLog(String log, Channel channel) throws IOException {
-        channel.basicPublish(EXCHANGE_NAME, "", null, log.getBytes());
+        channel.basicPublish(EXCHANGE_NAME, "test_producer_log",
+                MessageProperties.PERSISTENT_TEXT_PLAIN, log.getBytes());
     }
 
     public static void closeConnection(Connection connection) throws IOException {
