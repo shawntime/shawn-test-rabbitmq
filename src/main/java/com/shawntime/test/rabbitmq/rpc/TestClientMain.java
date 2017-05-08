@@ -13,7 +13,7 @@ import com.shawntime.test.rabbitmq.rpc.rabbit.Service;
 /**
  * Created by shma on 2017/5/8.
  */
-public class TestMain {
+public class TestClientMain {
 
     public static void main(String[] args) throws IOException, TimeoutException {
         String queueName = "rpc_queue_name";
@@ -23,8 +23,7 @@ public class TestMain {
         model.setUserName("shawntime");
         model.setVirtualHost("TEST");
         model.setPort(5672);
-        
-        Service service = new Service(model, queueName);
+
         Client client = new Client(model, queueName);
         IBaseClientService baseClientService = new BaseClientService(client);
         for(int i=0; i<10; ++i) {
