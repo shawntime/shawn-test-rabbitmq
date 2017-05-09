@@ -33,6 +33,7 @@ public class Service extends AbstractBasicService {
                     AMQP.BasicProperties replyProps = new AMQP.BasicProperties.Builder()
                             .correlationId(properties.getCorrelationId()).build();
                     producerChannel.basicPublish("", routingKey, replyProps, resultData);
+
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 } catch (InvocationTargetException e) {
