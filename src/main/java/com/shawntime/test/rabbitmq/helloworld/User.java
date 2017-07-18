@@ -14,6 +14,8 @@ public class User implements Serializable {
 
     private String name;
 
+    private String exchangeType;
+
     public String getName() {
         return name;
     }
@@ -30,11 +32,21 @@ public class User implements Serializable {
         this.id = id;
     }
 
+    public String getExchangeType() {
+        return exchangeType;
+    }
+
+    public void setExchangeType(String exchangeType) {
+        this.exchangeType = exchangeType;
+    }
+
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+        final StringBuilder sb = new StringBuilder("User{");
+        sb.append("id=").append(id);
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", exchangeType='").append(exchangeType).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }
