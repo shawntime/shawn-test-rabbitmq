@@ -54,7 +54,7 @@ public class TestProducer {
 
     private static Connection getConnection() throws IOException, TimeoutException {
         ConnectionFactory connectionFactory = new ConnectionFactory();
-        connectionFactory.setVirtualHost("TEST");
+        connectionFactory.setVirtualHost("Test");
         connectionFactory.setUsername("shawntime");
         connectionFactory.setHost("127.0.0.1");
         connectionFactory.setPassword("shawntime");
@@ -68,6 +68,7 @@ public class TestProducer {
         //设置消息持久化  RabbitMQ不允许使用不同的参数重新定义一个队列，所以已经存在的队列，我们无法修改其属性。
         boolean durable = true;
         channel.queueDeclare(QUEUE_NAME, durable, false, false, null);
+        channel.basicQos(1);
         return channel;
     }
 }

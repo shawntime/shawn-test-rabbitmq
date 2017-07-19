@@ -63,7 +63,7 @@ public class TestReceiver {
 
     private static Connection getConnection() throws IOException, TimeoutException {
         ConnectionFactory connectionFactory = new ConnectionFactory();
-        connectionFactory.setVirtualHost("TEST");
+        connectionFactory.setVirtualHost("Test");
         connectionFactory.setUsername("shawntime");
         connectionFactory.setHost("127.0.0.1");
         connectionFactory.setPassword("shawntime");
