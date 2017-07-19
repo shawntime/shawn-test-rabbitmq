@@ -18,7 +18,7 @@ import com.rabbitmq.client.MessageProperties;
  */
 public class TestLogProducer {
 
-    public static final String EXCHANGE_NAME = "exchange_log";
+    public static final String EXCHANGE_NAME = "shawntime_fanout_log";
 
     public static void main(String[] args) {
 
@@ -78,7 +78,7 @@ public class TestLogProducer {
         connectionFactory.setHost("127.0.0.1");
         connectionFactory.setUsername("shawntime");
         connectionFactory.setPassword("shawntime");
-        connectionFactory.setVirtualHost("TEST");
+        connectionFactory.setVirtualHost("Test");
         connectionFactory.setPort(AMQP.PROTOCOL.PORT);
         return connectionFactory.newConnection();
     }
