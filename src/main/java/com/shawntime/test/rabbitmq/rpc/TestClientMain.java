@@ -21,12 +21,12 @@ public class TestClientMain {
         model.setHost("127.0.0.1");
         model.setPassword("shawntime");
         model.setUserName("shawntime");
-        model.setVirtualHost("TEST");
+        model.setVirtualHost("Test");
         model.setPort(5672);
 
-        Client client = new Client(model, queueName);
+        Client client = new Client(model);
         IBaseClientService baseClientService = new BaseClientService(client);
-        for(int i=0; i<10; ++i) {
+        for(int i=0; i<1; ++i) {
             User userInfo = baseClientService.getUserInfo(1);
             System.out.println(userInfo.getUserId());
             System.out.println(userInfo.getUserName());

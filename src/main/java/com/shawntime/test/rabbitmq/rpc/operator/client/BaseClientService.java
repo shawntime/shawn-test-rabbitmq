@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
+import com.alibaba.fastjson.JSON;
+import com.shawntime.test.rabbitmq.rpc.JsonHelper;
 import com.shawntime.test.rabbitmq.rpc.RpcInvokeModel;
 import com.shawntime.test.rabbitmq.rpc.operator.IBaseClientService;
 import com.shawntime.test.rabbitmq.rpc.operator.ParamBean;
@@ -33,7 +35,7 @@ public class BaseClientService implements IBaseClientService {
         try {
             data = client.call(model);
             if (data != null) {
-                return SerializationUtils.deserialize(data);
+                return JsonHelper.deSerialize(new String(data, "UTF-8"), User.class);
             }
         } catch (IOException e) {
             e.printStackTrace();

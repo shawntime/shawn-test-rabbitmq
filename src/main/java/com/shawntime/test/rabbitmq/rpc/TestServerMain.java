@@ -17,7 +17,7 @@ public class TestServerMain {
         model.setHost("127.0.0.1");
         model.setPassword("shawntime");
         model.setUserName("shawntime");
-        model.setVirtualHost("TEST");
+        model.setVirtualHost("Test");
         model.setPort(5672);
 
         Service service = new Service(model, queueName);
