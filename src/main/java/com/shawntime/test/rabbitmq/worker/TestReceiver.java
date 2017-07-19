@@ -26,11 +26,12 @@ public class TestReceiver {
                 String msg = new String(body);
                 try {
                     work(msg);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } finally {
                     System.out.println(TestReceiver.class.hashCode() + ":" + msg);
                     //发送应答
                     channel.basicAck(envelope.getDeliveryTag(), false);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
                 }
             }
         };
