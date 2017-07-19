@@ -6,7 +6,6 @@ import java.util.UUID;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.TimeoutException;
 
 import com.google.common.collect.Maps;
@@ -36,7 +35,7 @@ public class Client extends AbstractBasicService implements IRpcService {
                                        AMQP.BasicProperties properties, final byte[] body) throws IOException {
                 BlockingQueue<byte[]> blockingQueue = completionQueueMap.get(properties.getCorrelationId());
                 if (blockingQueue == null) {
-                    blockingQueue = new SynchronousQueue<>();
+                    blockingQueue = new LinkedBlockingQueue<byte[]>(1);
                 }
                 blockingQueue.add(body);
             }
@@ -47,7 +46,7 @@ public class Client extends AbstractBasicService implements IRpcService {
         model.setDid(UUID.randomUUID().toString());
         model.setCallBackQueueName(callBackQueueName);
         byte[] body = SerializationUtils.serialize(model);
-        BlockingQueue<byte[]> blockingQueue = new SynchronousQueue<>();
+        BlockingQueue<byte[]> blockingQueue = new LinkedBlockingQueue<byte[]>(1);
         completionQueueMap.put(model.getDid(), blockingQueue);
         AMQP.BasicProperties basicProperties = new AMQP.BasicProperties()
                 .builder()
