@@ -8,7 +8,6 @@ import com.shawntime.test.rabbitmq.rpc.operator.bean.User;
 import com.shawntime.test.rabbitmq.rpc.operator.client.BaseClientService;
 import com.shawntime.test.rabbitmq.rpc.rabbit.Client;
 import com.shawntime.test.rabbitmq.rpc.rabbit.ConnectModel;
-import com.shawntime.test.rabbitmq.rpc.rabbit.Service;
 
 /**
  * Created by shma on 2017/5/8.
@@ -16,7 +15,6 @@ import com.shawntime.test.rabbitmq.rpc.rabbit.Service;
 public class TestClientMain {
 
     public static void main(String[] args) throws IOException, TimeoutException {
-        String queueName = "rpc_queue_name";
         ConnectModel model = new ConnectModel();
         model.setHost("127.0.0.1");
         model.setPassword("shawntime");
@@ -31,5 +29,9 @@ public class TestClientMain {
             System.out.println(userInfo.getUserId());
             System.out.println(userInfo.getUserName());
         }
+        User user = new User();
+        user.setUserName("AAA");
+        user.setUserId(222);
+        System.out.println(baseClientService.save(user));
     }
 }

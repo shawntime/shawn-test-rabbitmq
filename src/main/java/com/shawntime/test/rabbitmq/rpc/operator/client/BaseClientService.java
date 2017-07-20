@@ -47,4 +47,27 @@ public class BaseClientService implements IBaseClientService {
 
         return null;
     }
+
+    public int save(User user) {
+        ParamBean methodBean = RegisterCenter.getMethodBean(1);
+        RpcInvokeModel model = new RpcInvokeModel();
+        model.setMethodName(methodBean.getMethodName());
+        model.setClassName(methodBean.getClassName());
+        model.setArguments(new Object[]{user});
+        byte[] data;
+        try {
+            data = client.call(model);
+            if (data != null) {
+                return JsonHelper.deSerialize(new String(data, "UTF-8"), Integer.class);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
 }

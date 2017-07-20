@@ -27,11 +27,13 @@ public class Service {
 
     private Channel consumeChannel;
 
-    public Service(ConnectModel connectModel, String queueName) throws IOException, TimeoutException {
-        connect(connectModel);
+    private ConnectModel connectModel;
+
+    public Service(ConnectModel connectModel) throws IOException, TimeoutException {
+        this.connectModel = connectModel;
     }
 
-    private void connect(ConnectModel connectModel) throws IOException, TimeoutException {
+    public void start() throws IOException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setVirtualHost(connectModel.getVirtualHost());
         factory.setPort(connectModel.getPort());
@@ -57,8 +59,8 @@ public class Service {
                 Class cls;
                 try {
                     cls = Class.forName(model.getClassName());
-                    Method setMethod = cls.getDeclaredMethod(model.getMethodName(), Integer.class);
-                    Object object = setMethod.invoke(cls.newInstance(), model.getArguments());
+                    Method method = cls.getDeclaredMethod(model.getMethodName(), Integer.class);
+                    Object object = method.invoke(cls.newInstance(), model.getArguments());
                     byte[] resultData = JsonHelper.serialize(object).getBytes("UTF-8");
                     String queueName = properties.getReplyTo();
                     AMQP.BasicProperties replyProps = new AMQP.BasicProperties.Builder()

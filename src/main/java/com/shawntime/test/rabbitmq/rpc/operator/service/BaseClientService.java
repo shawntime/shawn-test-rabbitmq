@@ -14,4 +14,8 @@ public class BaseClientService implements IBaseClientService {
         user.setUserName("亚洲舞王");
         return user;
     }
+
+    public int save(User user) {
+        return 1;
+    }
 }

@@ -8,4 +8,6 @@ import com.shawntime.test.rabbitmq.rpc.operator.bean.User;
 public interface IBaseClientService {
 
     User getUserInfo(Integer userId);
+
+    int save(User user);
 }
