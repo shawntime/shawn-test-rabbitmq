@@ -49,7 +49,7 @@ public class BaseClientService implements IBaseClientService {
     }
 
     public int save(User user) {
-        ParamBean methodBean = RegisterCenter.getMethodBean(1);
+        ParamBean methodBean = RegisterCenter.getMethodBean(2);
         RpcInvokeModel model = new RpcInvokeModel();
         model.setMethodName(methodBean.getMethodName());
         model.setClassName(methodBean.getClassName());

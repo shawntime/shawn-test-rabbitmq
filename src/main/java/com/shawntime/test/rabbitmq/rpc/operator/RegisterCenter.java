@@ -16,6 +16,10 @@ public class RegisterCenter {
         paramBean.setMethodName("getUserInfo");
         paramBean.setClassName("com.shawntime.test.rabbitmq.rpc.operator.service.BaseClientService");
         dataMap.put(1, paramBean);
+        ParamBean paramBean2 = new ParamBean();
+        paramBean2.setMethodName("save");
+        paramBean2.setClassName("com.shawntime.test.rabbitmq.rpc.operator.service.BaseClientService");
+        dataMap.put(2, paramBean2);
     }
 
     public static ParamBean getMethodBean(int id) {

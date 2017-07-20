@@ -59,8 +59,13 @@ public class Service {
                 Class cls;
                 try {
                     cls = Class.forName(model.getClassName());
-                    Method method = cls.getDeclaredMethod(model.getMethodName(), Integer.class);
-                    Object object = method.invoke(cls.newInstance(), model.getArguments());
+                    Object[] arguments = model.getArguments();
+                    Class[] clazz = new Class[arguments.length];
+                    for (int index = 0 ; index < clazz.length; ++index) {
+                        clazz[index] = arguments[index].getClass();
+                    }
+                    Method method = cls.getDeclaredMethod(model.getMethodName(), clazz);
+                    Object object = method.invoke(cls.newInstance(), arguments);
                     byte[] resultData = JsonHelper.serialize(object).getBytes("UTF-8");
                     String queueName = properties.getReplyTo();
                     AMQP.BasicProperties replyProps = new AMQP.BasicProperties.Builder()
